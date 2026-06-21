@@ -23,8 +23,7 @@ const NotesClient = ({ tag }: NotesClientProps) => {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["notes", searchQuery, currentPage, tag],
-    queryFn: () =>
-      fetchNotes(searchQuery, currentPage, tag as NoteTag | undefined),
+    queryFn: () => fetchNotes(searchQuery, currentPage, (tag || "") as NoteTag),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
   });
@@ -43,7 +42,7 @@ const NotesClient = ({ tag }: NotesClientProps) => {
     <div className={css.app}>
       <header className={css.toolbar}>
         <SearchBox onSearch={handleSearch} />
-        {totalPages > 1 && (
+        {notes.length > 0 && (
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
