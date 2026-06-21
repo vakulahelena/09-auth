@@ -1,17 +1,12 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
-import css from "./NotePreview.module.css";
-import Modal from "@/components/Modal/Modal";
+import { useParams } from "next/navigation";
+import css from "./NoteDetails.module.css";
 import { fetchNoteById } from "@/lib/api/clientApi";
 
-const NotePreviewClient = () => {
+const NoteDetailsClient = () => {
   const { id } = useParams<{ id: string }>();
-  const router = useRouter();
-  const handleClose = () => {
-    router.back();
-  };
   const {
     data: note,
     isLoading,
@@ -25,7 +20,7 @@ const NotePreviewClient = () => {
   if (error || !note) return <p>Something went wrong.</p>;
 
   return (
-    <Modal onClose={handleClose}>
+    <main className={css.main}>
       <div className={css.container}>
         <div className={css.item}>
           <div className={css.header}>
@@ -40,8 +35,7 @@ const NotePreviewClient = () => {
           </p>
         </div>
       </div>
-    </Modal>
+    </main>
   );
 };
-
-export default NotePreviewClient;
+export default NoteDetailsClient;
